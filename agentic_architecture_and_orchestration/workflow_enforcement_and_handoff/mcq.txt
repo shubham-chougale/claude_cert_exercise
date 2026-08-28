@@ -1,0 +1,44 @@
+Q.1) Production data reveals that in 8% of cases, a customer support agent processes refunds without verifying account ownership, occasionally leading to refunds on wrong accounts. The system prompt clearly states "always verify customer identity before processing refunds." What is the most appropriate fix?
+
+A) Implement a programmatic prerequisite gate that blocks process_refund until get_customer has returned a verified customer ID
+B) Add stronger instructions to the system prompt emphasising the critical importance of verification before any refund processing
+C) Add few-shot examples demonstrating the correct verification-then-refund workflow sequence
+D) Implement a routing classifier that sends all refund requests to a specialised verification-first pipeline
+
+Ans : - A
+
+Q.2) When an agent escalates to a human agent, the handoff summary must include specific fields because:
+
+A) The human agent prefers structured data over conversational summaries when triaging a queue of escalations
+B) Structured handoffs are required by the Claude API specification
+C) The human agent does NOT have access to the conversation transcript and needs a self-contained summary
+D) The monitoring system requires specific fields on every handoff for compliance tracking and audit reporting
+
+Ans : - C
+
+Q.3) A compliance team requires that a certain workflow step occurs 100% of the time before a financial operation. Which approach provides this guarantee?
+
+A) Including the requirement in the system prompt with bold formatting and repeated emphasis
+B) Implementing a hook or prerequisite gate that programmatically blocks the operation until the step completes
+C) Using few-shot examples that demonstrate the correct sequence in 10 different scenarios
+D) Adding a separate validation agent that checks compliance before forwarding to the financial agent
+
+Ans : - B
+
+Q.4) A customer submits a request with three concerns: return an order, dispute a charge, and update their address. How should the agent handle this?
+
+A) Address the most urgent concern first and ask the customer to call back for the other two
+B) Forward all three concerns to a human agent because compound requests are too complex
+C) Handle each concern in a separate conversation to avoid confusion
+D) Decompose into three items, investigate them in parallel, and synthesise one resolution
+
+Ans : - D
+
+Q.5) For which of the following scenarios is prompt-based guidance (rather than programmatic enforcement) an acceptable approach?
+
+A) Ensuring refunds are processed only after identity verification
+B) Formatting agent responses in markdown with headers and bullet points
+C) Requiring anti-money laundering checks before international transfers
+D) Blocking account deletions without manager approval
+
+Ans : - B
