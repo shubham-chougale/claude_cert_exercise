@@ -1,0 +1,44 @@
+Q.1) A developer resumes a Claude Code session after modifying 3 files in a 50-file codebase. The agent gives contradictory advice about the modified files. What is most appropriate?
+
+A) Resume the existing session and ask the agent to re-read the 3 modified files
+B) Start a completely new session and re-analyze the entire 50-file codebase from scratch
+C) Start a fresh session with an injected summary of prior findings and inform the agent about the specific 3 file changes for targeted re-analysis
+D) Use fork_session to branch the existing session
+
+Ans : - C
+
+Q.2) Why does resuming a session after files have changed on disk produce contradictory or outdated advice?
+
+A) The resumed session automatically re-reads every file, which slows it down and causes errors
+B) The session's history still contains the old tool results (file contents as they were when first read), so the agent reasons from data that no longer matches reality
+C) Resume always resets the agent's memory of prior findings
+D) The Claude API blocks resume when files have changed
+
+Ans : - B
+
+Q.3) What is the main risk of starting a completely fresh session and re-analyzing the entire 50-file codebase from scratch after only 3 files changed?
+
+A) It is technically infeasible because fresh sessions cannot read files
+B) It wastes effort re-exploring 47 unchanged files and discards the prior session's already-verified findings instead of reusing them
+C) It will produce more contradictions than resuming the stale session
+D) Fresh sessions cannot accept a structured summary as input
+
+Ans : - B
+
+Q.4) When is fork_session the appropriate choice rather than resume or a fresh start with summary injection?
+
+A) When files have changed underneath a session and the agent needs to see the current content
+B) When you want to explore a divergent path (e.g. an alternative fix) while preserving the original session intact, understanding the fork still inherits the same tool-result history as its parent
+C) When you need to guarantee the agent never re-reads stale tool results
+D) When the codebase has grown too large for a single session to hold
+
+Ans : - B
+
+Q.5) What should a structured summary injected into a fresh session contain to avoid the stale context problem while still preserving prior knowledge?
+
+A) The full raw tool-call history from the original session, including every file read
+B) Only the names of the files that were reviewed, with no findings
+C) A concise record of prior findings (file, issue, severity, recommendation) plus an explicit note of which specific files have since changed
+D) A single sentence summarising that "the codebase was reviewed and is fine"
+
+Ans : - C

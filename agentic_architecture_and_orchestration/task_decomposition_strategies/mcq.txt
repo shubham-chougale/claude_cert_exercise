@@ -1,0 +1,44 @@
+Q.1) A code review agent processes 14 files in one pass. It gives detailed feedback for the first 5 files but misses obvious bugs in files 10-14. It also flags a forEach loop as inefficient in one file while approving identical code in another. What is the root cause and most appropriate solution?
+
+A) Reduce files per review to 5 in sequential batches
+B) Upgrade to a model with a larger context window
+C) Add a stronger system prompt emphasising equal thoroughness across all files
+D) Split into a per-file local analysis pass plus a separate cross-file integration pass
+
+Ans : - D
+
+Q.2) Why does a larger context window fail to fix the attention dilution symptoms described in Q.1?
+
+A) Larger context windows are more expensive and therefore not a practical fix
+B) The problem is structural attention allocation across many items in one pass, not the amount of context available
+C) Larger context windows cannot process code files, only natural language
+D) Larger context windows increase latency, which causes the model to skip files
+
+Ans : - B
+
+Q.3) A team batches 14 files into two passes of 7 files each, with no separate cross-file step. Which class of issue will this approach still miss?
+
+A) Bugs that are only detectable from a single file's contents in isolation
+B) Syntax errors within an individual file
+C) Cross-cutting issues such as inconsistent API usage or data-flow problems visible only when comparing findings across all files
+D) Issues in the first file reviewed in each batch
+
+Ans : - C
+
+Q.4) What is the key structural difference between a fixed sequential pipeline and dynamic adaptive decomposition?
+
+A) A fixed pipeline always uses more compute than adaptive decomposition
+B) A fixed pipeline executes the same predetermined steps regardless of input, while adaptive decomposition adjusts the steps/passes based on what is discovered during execution
+C) Adaptive decomposition never requires a cross-file integration pass
+D) A fixed pipeline is only used for single-file inputs
+
+Ans : - B
+
+Q.5) Which observation is the clearest evidence of an "attention dilution artefact" during a code review?
+
+A) The agent takes longer to review later files than earlier files
+B) The agent flags the exact same code pattern as a problem in one file and approves it as fine in another file
+C) The agent produces a shorter summary for smaller files
+D) The agent requests additional files it was not given
+
+Ans : - B
