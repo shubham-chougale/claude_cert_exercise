@@ -1,0 +1,44 @@
+Q.1) A developer's agent sometimes terminates prematurely when Claude returns text alongside a tool call. Their loop checks response.content[0].type == "text" to determine if the agent is finished. Users report incomplete responses on complex queries. What should the developer change?
+
+A) Add an iteration cap of 15 loops to ensure the agent runs long enough for complex queries
+B) Parse the assistant's text for completion phrases like "I have finished" before terminating the loop
+C) Check the stop_reason field instead of content type — continue when stop_reason is "tool_use", terminate when "end_turn"
+D) Set tool_choice to "any" so Claude always calls a tool instead of returning text, and treat a text-only reply as the end of the run
+
+Ans : - C
+
+Q.2) Which of the following correctly describes the agentic loop lifecycle?
+
+A) Send request, inspect stop_reason, if "tool_use" execute tools and append results to history, if "end_turn" finish
+B) Send request, check if response contains text, parse text for instructions, execute any tools mentioned in text
+C) Send request, execute all available tools in sequence, check if any returned errors, retry failed tools
+D) Send request, count tokens in response, if tokens exceed threshold then tools are needed, otherwise finish
+
+Ans : - A 
+
+Q.3) An agent completes simple tasks correctly but enters an infinite loop on complex queries. The developer's fix is to add an iteration cap of 10. What is wrong with this approach?
+
+A) The iteration cap is too low — it should be at least 50 for complex queries
+B) Iteration caps only work with synchronous APIs, not with streaming responses
+C) The agent needs more tools to handle complex queries, not an iteration cap
+D) Caps are a safety net, but the real bug is an unchecked stop_reason
+
+Ans : - D
+
+Q.4) Why must tool results be appended to the conversation history before sending the next request to Claude?
+
+A) To reduce API costs by caching previous responses
+B) So Claude can reason about what the tool returned before deciding what to do next
+C) To enable streaming of partial results to the user interface
+D) Because the Messages API rejects requests that do not include complete conversation history
+
+Ans : - B 
+
+Q.5) A customer support agent uses model-driven decision-making to select tools. Under what circumstance should this approach be overridden with programmatic enforcement?
+
+A) When the task requires deterministic compliance for financial, security, or regulatory operations
+B) When the agent is handling more than 3 concurrent conversations, because parallel sessions make model-driven tool selection unreliable
+C) When the user requests a specific tool by name in their message
+D) When the agent has access to more than 5 tools, since a wider tool surface makes the model's selection harder to predict
+
+Ans : - A 

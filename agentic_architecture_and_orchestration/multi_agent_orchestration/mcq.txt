@@ -1,0 +1,44 @@
+Q.1) A multi-agent research system produces a report on "renewable energy technologies" that only covers solar and wind power. Each subagent produced thorough, well-sourced coverage of its assigned topic. The web search subagent returned relevant results for every query it received. What is the most likely root cause?
+
+A) The web search subagent used queries that were too narrow, missing results for other energy types
+B) The coordinator's decomposition named only solar and wind, so no agent was assigned the rest
+C) The synthesis subagent failed to identify gaps in the research and request additional coverage
+D) The document analysis subagent did not have access to sources covering other renewable energy types
+
+Ans : - B
+
+Q.2) Which of the following is a benefit of routing ALL subagent communication through the coordinator?
+
+A) It reduces the total number of API calls required to complete a task
+B) It allows subagents to share memory and build on each other's findings automatically
+C) It enables subagents to run in parallel without coordination overhead
+D) It provides observability, consistent error handling, and controlled information flow
+
+Ans : - D
+
+Q.3) A developer proposes allowing subagents to communicate directly with each other to reduce latency. Why is this approach problematic?
+
+A) It breaks observability, consistent error handling, and controlled information flow
+B) Direct communication is not supported by the Claude API
+C) Subagents cannot process messages from other subagents
+D) It would require every subagent to have access to all the other subagents' tools, widening each one's scope
+
+Ans : - A
+
+Q.4) A coordinator invokes a web search subagent twice for two different subtopics. The second invocation returns results that contradict the first. What explains this?
+
+A) The web search tool has a caching bug that returns stale results
+B) The coordinator passed conflicting instructions to the two invocations
+C) Subagents share no memory, so each invocation is fully independent
+D) The second subagent inherited stale context from the first invocation
+
+Ans : - C
+
+Q.5) A multi-agent system's output consistently misses entire categories of a broad topic. A developer proposes adding three more specialist subagents to increase coverage. Will this fix the problem?
+
+A) Yes, more subagents means more comprehensive coverage of the topic
+B) No, narrow decomposition simply yields equally narrow assignments
+C) Yes, as long as the new subagents have access to different data sources
+D) No — the fix is to allow subagents to communicate directly so they can identify gaps themselves
+
+Ans : - B

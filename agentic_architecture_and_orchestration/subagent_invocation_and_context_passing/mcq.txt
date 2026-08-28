@@ -1,0 +1,44 @@
+Q.1) A synthesis agent produces a report where several claims have no source attribution. The web search subagent correctly returns results with URLs, titles, and snippets. The document analysis subagent correctly returns analysis with page references. Both subagents are verified to be working properly. What is the most likely root cause?
+
+A) The synthesis agent's system prompt does not include instructions to cite sources
+B) The synthesis agent should be given direct access to the web search tool so it can verify sources itself
+C) The web search subagent needs to return results in a different format that the synthesis agent can parse
+D) The coordinator passes on content stripped of its structured source metadata
+
+Ans : - D
+
+Q.2) A coordinator needs to spawn a web search subagent and a document analysis subagent for independent research tasks. What is the most efficient spawning approach?
+
+A) Invoke the web search subagent first, wait for results, then invoke the document analysis subagent
+B) Emit multiple Task tool calls in a single coordinator response to spawn both subagents in parallel
+C) Create a shared message queue that both subagents can read from simultaneously
+D) Invoke both subagents with identical prompts so they can cross-verify each other's results
+
+Ans : - B
+
+Q.3) A coordinator's allowedTools list contains ["WebSearch", "Read"] but does NOT include "Task" (or "Agent", its current name). What happens when the coordinator tries to spawn a subagent?
+
+A) The coordinator spawns the subagent but with reduced capabilities
+B) The coordinator automatically falls back to calling the subagent's tools directly
+C) The coordinator cannot spawn any subagents — Task must be in allowedTools
+D) The coordinator spawns the subagent but it inherits the coordinator's tools instead of its own
+
+Ans : - C
+
+Q.4) A developer uses fork_session after analysing a codebase to explore two different refactoring strategies. Which statement correctly describes how forks behave?
+
+A) Each fork operates independently after the branching point — changes in one fork do not affect the other
+B) Both forks share memory and can see each other's results in real time
+C) The second fork automatically receives a summary of everything the first fork found after the branching point
+D) Forks are identical to --resume sessions and can be used interchangeably
+
+Ans : - A
+
+Q.5) When designing a coordinator prompt for subagents, which approach leads to better subagent performance?
+
+A) Provide detailed step-by-step procedural instructions for how the subagent should complete the task
+B) Include the coordinator's full conversation history so the subagent has maximum context
+C) Specify research goals and quality criteria, allowing the subagent to adapt its approach
+D) Keep the prompt minimal to avoid overwhelming the subagent with information
+
+Ans : - C
