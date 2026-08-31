@@ -1,0 +1,4 @@
+{
+  "timeout_seconds": 5,
+  "retry_limit": 3
+}

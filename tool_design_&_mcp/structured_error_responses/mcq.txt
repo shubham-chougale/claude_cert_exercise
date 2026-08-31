@@ -1,0 +1,44 @@
+Q.1) A customer-lookup tool returns an empty array. The agent retries 3 times, then escalates to a human. Investigation shows the customer's account simply does not exist -- the query executed correctly and found no matches. What is the root cause and correct fix?
+
+A) The tool is too slow and needs a longer timeout before returning results
+B) The tool doesn't distinguish access failures from valid empty results; it should return isError:false with resultCount:0 for a successful empty query, versus isError:true with errorCategory:"transient" for an actual access failure
+C) The agent should retry more than 3 times before escalating
+D) The tool should always return isError:true so the agent knows to stop searching
+
+Ans : - B
+
+Q.2) A validation error is returned with isRetryable:false. What does this actually mean for the agent's recovery strategy?
+
+A) The agent should give up and escalate immediately, since the field says the call cannot be retried
+B) Resending the identical call is pointless, but the agent can still recover on its own by correcting the input (using the description's format instructions) and sending a new call
+C) The agent should ignore isRetryable and retry the identical call anyway
+D) isRetryable:false always means a human must intervene
+
+Ans : - B
+
+Q.3) A refund request fails with errorCategory:"business" because the amount exceeds the automatic approval limit. The agent retries the identical request twice more before giving up. What is wrong with this behavior?
+
+A) Nothing -- retrying a few times before escalating is always the safest approach
+B) Business errors should be retried with exponential backoff, just like transient errors
+C) A business error reflects a policy violation that applies to every identical request; retrying wastes calls and delays the correct action, which is escalating or finding an alternative workflow immediately
+D) The agent should have used a smaller refund amount on retry
+
+Ans : - C
+
+Q.4) In a multi-agent system, a subagent searches 5 sources; 2 time out and 3 succeed. The subagent returns an empty result to the coordinator with no explanation. Why is this an anti-pattern?
+
+A) It silently suppresses the failure information the coordinator needs, and discards the 3 successful sources' partial results instead of returning them alongside a description of what failed
+B) The subagent should have raised an exception and crashed the whole workflow
+C) It is not an anti-pattern; returning empty results on any partial failure is the safest default
+D) The subagent should retry the 2 timed-out sources indefinitely until they succeed
+
+Ans : - A
+
+Q.5) Which of the following four error categories is the ONLY one where isRetryable should be set to true?
+
+A) validation -- because the agent can fix the input itself
+B) business -- because policy limits can change between requests
+C) transient -- because the system was only temporarily unreachable and the same request should succeed once it's available again
+D) permission -- because credentials can be refreshed automatically
+
+Ans : - C

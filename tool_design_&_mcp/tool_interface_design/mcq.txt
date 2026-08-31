@@ -1,0 +1,44 @@
+Q.1) Production logs show frequent misrouting between two tools -- get_customer ("Retrieves customer information") and lookup_order ("Retrieves order details") -- on an agent that has only these two tools available. What is the most appropriate first fix?
+
+A) Add a routing classifier in front of the agent to pick the tool before the LLM sees it
+B) Expand each tool's description to include purpose, input specs, example queries, edge cases, and an explicit boundary against the other tool
+C) Consolidate both tools into a single unified tool
+D) Add few-shot examples to the system prompt without changing the tool descriptions
+
+Ans : - B
+
+Q.2) Why does adding few-shot examples to the system prompt fail to fix the ambiguous-description misrouting described in Q.1?
+
+A) Few-shot examples are not supported by the tool-use API
+B) It adds token overhead without addressing the root-cause ambiguity in the tool descriptions themselves, which are what the model actually weighs during selection
+C) Few-shot examples can only be used for text-generation tools, not tool selection
+D) It requires retraining the underlying model
+
+Ans : - B
+
+Q.3) An agent's toolkit grows to 15 tools, each with a well-written, disambiguated description, and misrouting still occurs frequently. What is the most likely root cause?
+
+A) The descriptions are still not long enough and need more edge cases listed
+B) Decision complexity from having too many tools available to one agent, not description quality
+C) The model does not support more than 5 tools in a single request
+D) The system prompt needs additional few-shot examples
+
+Ans : - B
+
+Q.4) A generic analyze_document tool ("Analyses a document and returns results") is frequently invoked for tasks it handles poorly, mixing up field extraction, summarization, and fact-checking. What is the recommended structural fix?
+
+A) Add more example queries to the single tool's description and keep it as one tool
+B) Split it into purpose-specific tools such as extract_data_points, summarize_content, and verify_claim_against_source, each with its own explicit boundary
+C) Rename the tool to something more descriptive
+D) Add a confirmation step before every invocation of the tool
+
+Ans : - B
+
+Q.5) After rewriting get_customer's and lookup_order's descriptions to be unambiguous (each now scores 10/10 on a clean test set), misrouting toward get_customer still occurs on some genuine order queries. Investigation finds the system prompt contains "Always check customer details before proceeding with any request." What should be done?
+
+A) Nothing further -- system prompt content is unrelated to tool description quality, so this must be a separate bug
+B) Revert to the original weak descriptions since the rewrite clearly had no effect
+C) Reread the system prompt for keyword-sensitive instructions that silently override tool descriptions, and remove or narrow the conflicting instruction
+D) Add a routing classifier since expanding descriptions has already been tried and failed
+
+Ans : - C

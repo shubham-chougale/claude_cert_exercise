@@ -1,0 +1,44 @@
+Q.1) An agent is assigned 18 tools and shows degraded tool-selection reliability even though every description is well-written and unambiguous. What is the recommended fix?
+
+A) Keep rewriting descriptions until selection improves
+B) Scope the agent down to roughly 4-5 tools relevant to its specific role
+C) Switch tool_choice from "auto" to "any" so the model is forced to pick one
+D) Move half the tools to a second MCP server
+
+Ans : - B
+
+Q.2) A data platform has 22 tools: 3 query tools plus 19 near-identical transformation tools (pivot_table, calculate_percentile, normalise_currency, etc.) that differ only in which operation they perform. Rewriting each tool's description to be clearer does not improve selection accuracy. What is the correct fix?
+
+A) Split the 19 transformation tools across two agents, ~10 each
+B) Consolidate the 19 near-duplicate tools into a single parameterized tool (e.g. transform_data) with an operation enum
+C) Add a routing classifier in front of the 22 tools
+D) Move the transformation tools to a separate MCP server so the model sees fewer tools per request
+
+Ans : - B
+
+Q.3) A document-extraction agent must return structured data for a document whose type (invoice, receipt, or contract) is not known until the model inspects it, and it must never fall back to a conversational text reply. Which tool_choice configuration is correct?
+
+A) `{"type": "auto"}`, since the model should decide based on context
+B) `{"type": "any"}`, forcing a tool call without committing to which schema in advance
+C) `{"type": "tool", "name": "extract_invoice"}`, forcing that specific tool every time
+D) No tool_choice setting is needed since the tools already have good descriptions
+
+Ans : - B
+
+Q.4) A synthesis agent verifies facts during report generation. Analysis shows 85% of verifications are simple single-source lookups, while routing every verification through a coordinator adds 2-3 round trips and roughly 40% extra latency. What is the best fix?
+
+A) Route all verifications through the coordinator to keep the architecture simple
+B) Give the synthesis agent a scoped verify_fact tool for simple lookups, and keep routing only complex multi-source verifications through the coordinator
+C) Remove the coordinator entirely and let the synthesis agent verify everything itself
+D) Increase the coordinator's timeout so round trips complete faster
+
+Ans : - B
+
+Q.5) A subagent is given a generic `fetch_url` tool that can retrieve content from any URL, when its actual job only requires reading internal documentation pages. What principle is violated, and what is the fix?
+
+A) No principle is violated; a general-purpose fetch tool is more flexible and should be preferred
+B) Least privilege is violated; replace `fetch_url` with a constrained tool like `load_document` that only resolves approved document hosts
+C) The tool description is too short and just needs more example queries
+D) The fix is to force tool_choice to that one tool so it can't be misused
+
+Ans : - B

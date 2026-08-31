@@ -1,0 +1,44 @@
+Q.1) You need to find every place in the codebase that calls the function processLegacyOrder. Which built-in tool is correct, and why?
+
+A) Glob, because it searches for named patterns across the whole project
+B) Grep, because it searches file CONTENTS for a pattern, while Glob only matches file PATHS by name
+C) Read, because you must open every file to be sure
+D) Bash, using a shell alias for search
+
+Ans : - B
+
+Q.2) You need to find every test file for a module, e.g. files matching **/OrderProcessor.test.*. Which tool is correct?
+
+A) Grep, since it can search for "test" in file contents
+B) Glob, since it matches file paths by naming pattern rather than searching contents
+C) Edit, since it can preview matching files before changing them
+D) Bash, since only a shell command can filter by extension
+
+Ans : - B
+
+Q.3) An Edit call fails because old_string matches the target text in two different places in the file. What is the documented recovery order?
+
+A) Immediately fall back to Read the whole file and Write it back with the change made manually
+B) Widen old_string with more surrounding context to make it unique, or pass replace_all: true if the same change belongs everywhere; only fall back to Read+Write if neither disambiguates
+C) Retry the identical Edit call until it succeeds
+D) Switch to Bash with a sed command instead
+
+Ans : - B
+
+Q.4) Why does reading every file in a codebase upfront before making a change hurt performance on this exam's model of tool use?
+
+A) Read is slower per-call than Grep or Glob
+B) It exhausts the context budget on files that are irrelevant to the task, instead of using Grep/Glob first to justify which files are worth reading
+C) Read cannot open more than one file per session
+D) It triggers rate limits on the file system
+
+Ans : - B
+
+Q.5) You are deprecating processLegacyOrder and need every direct caller, its test coverage, and any indirect callers that go through a wrapper function re-exporting it under a new name. What sequence of tool calls finds all of it?
+
+A) A single Grep for processLegacyOrder is sufficient, since it will find every reference including wrapped ones
+B) Glob for all .py files, then read each one in full
+C) Grep for processLegacyOrder to find direct callers, Glob for the sibling test file(s), then Grep again for the wrapper function's name to catch indirect callers that only reference the wrapper
+D) Bash with a recursive find and grep piped together, run once
+
+Ans : - C

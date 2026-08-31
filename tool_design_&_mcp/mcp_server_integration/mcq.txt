@@ -1,0 +1,44 @@
+Q.1) A team wants to configure a Jira MCP server so every developer on the repo automatically gets it, and a second developer separately wants to try an experimental search server just for themselves. Where should each be configured?
+
+A) Both belong in `~/.claude.json` so neither is committed to version control
+B) The Jira server belongs in the project-level `.mcp.json` (version-controlled, shared with the team); the experimental server belongs in the personal, non-version-controlled `~/.claude.json`
+C) Both belong in `.mcp.json` since all MCP servers must be shared with the team
+D) It doesn't matter -- project-level and user-level configs are never merged, so placement has no effect on which tools are available
+
+Ans : - B
+
+Q.2) A `.mcp.json` file is about to be committed with `"env": {"GITHUB_TOKEN": "ghp_abc123realtoken"}`. What is wrong, and what is the correct fix?
+
+A) Nothing is wrong -- committing the token lets every teammate authenticate immediately
+B) The literal token is a credential leaked into version control; it should be replaced with `"${GITHUB_TOKEN}"` so it expands from each developer's own environment at load time
+C) The fix is to move the whole server definition to `~/.claude.json` instead
+D) The fix is to base64-encode the token before committing it
+
+Ans : - B
+
+Q.3) An agent needs to know a database's table names and column structure before it can act. What is the most efficient way to give it that information via MCP?
+
+A) Have the agent call a `list_tables` tool, then a `describe_table` tool once per table, before every task
+B) Expose the schema as an MCP resource so the agent can see the full catalogue without spending any tool calls, reserving tools for actions
+C) Hardcode the schema into the system prompt for every agent regardless of whether it needs database access
+D) Require the agent to guess column names and correct itself via trial-and-error tool calls
+
+Ans : - B
+
+Q.4) A team needs a Jira integration and is deciding whether to build a custom MCP server or use an existing community one. Their workflow is a standard "create issue, transition status, search issues" flow with no unusual business logic. What is the correct choice?
+
+A) Build a custom server, since custom servers always offer tighter control
+B) Evaluate and use an existing, well-maintained community Jira MCP server -- building custom is unnecessary for a standard integration with no custom workflow
+C) Avoid MCP entirely and call the Jira REST API directly from the system prompt
+D) Build a custom server only after the community server has been used for at least six months
+
+Ans : - B
+
+Q.5) An MCP code-search tool is described only as "Searches code," while Claude Code's built-in Grep tool has a detailed, multi-sentence description of its capabilities. Even though the MCP tool is capable of deeper semantic/AST-aware search, the model keeps choosing Grep instead. What is the most appropriate fix?
+
+A) Remove the built-in Grep tool so the MCP tool has no competition
+B) Expand the MCP tool's description to 3-5 sentences covering its capabilities, outputs, use cases, and how it compares to grep-style search
+C) Force tool_choice to always select the MCP tool regardless of the query
+D) Nothing can be done -- built-in tools always take priority over MCP tools
+
+Ans : - B
