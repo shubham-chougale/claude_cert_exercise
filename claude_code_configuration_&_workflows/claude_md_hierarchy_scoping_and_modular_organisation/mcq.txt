@@ -1,0 +1,44 @@
+Q.1) Developer A's Claude Code has followed the team's API naming conventions perfectly for months. Developer B joins, clones the exact same repo and branch, and gets inconsistent naming from Claude Code. What is the most likely root cause?
+
+A) The naming conventions live in Developer A's user-level config (~/.claude/CLAUDE.md), which is not version-controlled and never reaches Developer B
+B) An MCP server configured only for Developer A is supplying the conventions
+C) .claude/rules/ files are incompatible with Developer B's setup
+D) Developer B has not run /memory to load the configuration
+
+Ans : - A
+
+Q.2) A project-root CLAUDE.md says "use snake_case for all functions" and a directory-level CLAUDE.md in /packages/api says "use camelCase for all functions." How does Claude Code resolve this?
+
+A) The directory-level file always overrides the project-root file because it is more specific
+B) The project-root file always overrides the directory-level file because it loads first
+C) Both files are concatenated into context; when the rules contradict, Claude may pick one arbitrarily -- there is no precedence chain like settings.json
+D) Claude Code refuses to start until the conflict is resolved manually
+
+Ans : - C
+
+Q.3) A team needs a rule that must be enforced no matter what Claude Code decides -- for example, blocking a specific tool entirely. Where should this rule live?
+
+A) In the project-root CLAUDE.md, worded as strongly as possible
+B) In settings.json (or a hook), which has a strict precedence chain and is enforced by the client regardless of Claude's decision
+C) In ~/.claude/CLAUDE.md so every session picks it up automatically
+D) In a .claude/rules/ file with no paths frontmatter
+
+Ans : - B
+
+Q.4) What do the /memory and /context commands actually do?
+
+A) /memory loads user-level CLAUDE.md files into context, and /context loads project-level files
+B) They are purely diagnostic -- they report what has already loaded automatically based on file location; they do not cause anything to load
+C) Running /memory forces Claude Code to re-read every CLAUDE.md file in the hierarchy from disk
+D) /context activates .claude/rules/ files that would otherwise stay dormant
+
+Ans : - B
+
+Q.5) A codebase has over 50 directories containing test files, and every test file should follow identical conventions. What is wrong with placing a CLAUDE.md file in every one of those directories to enforce this?
+
+A) Directory-level CLAUDE.md files are not supported by Claude Code
+B) It creates 50+ duplicate copies of the same content, causing a maintenance burden and convention drift as updates propagate inconsistently -- a path-specific rule with a glob pattern is the correct tool instead
+C) Directory-level CLAUDE.md files silently override the project-root CLAUDE.md, breaking other conventions
+D) CLAUDE.md files cannot contain testing-related content
+
+Ans : - B

@@ -1,0 +1,44 @@
+Q.1) A developer must choose between plan mode and direct execution for a new task. What is the correct primary decision criterion?
+
+A) Task difficulty -- harder tasks always warrant plan mode
+B) Ambiguity level -- whether the scope, approach, or number of valid implementations is uncertain, regardless of how hard the task is
+C) File count alone -- more than one file always warrants plan mode
+D) Developer seniority -- junior developers should always use plan mode
+
+Ans : - B
+
+Q.2) A team must restructure a monolith into microservices, fix a null pointer exception in one function with a clear stack trace, and migrate a logging library across 30 files using one consistent API mapping. What is the correct mode assignment?
+
+A) Direct execution for all three, since Claude Code can handle any change directly
+B) Plan mode for all three, since more than one file is involved in two of them
+C) Plan mode for the monolith restructure, direct execution for the null pointer fix, and plan-then-direct execution for the logging migration
+D) Direct execution for the monolith restructure and the logging migration, plan mode only for the null pointer fix
+
+Ans : - C
+
+Q.3) A developer starts a task in direct execution, but midway through discovers the codebase supports three genuinely different valid approaches -- information that was already stated in the original task requirements. What was the mistake?
+
+A) There was no mistake; discovering complexity mid-task is the expected way to decide on plan mode
+B) The task should have been classified as needing plan mode from the start, since the multiple valid approaches were already known before any execution began
+C) The developer should have used a routing classifier to pick between the three approaches
+D) The task should have stayed in direct execution and simply be redone if the wrong approach was chosen
+
+Ans : - B
+
+Q.4) What is the purpose of routing codebase discovery (file listings, dependency graphs) through the Explore subagent instead of performing it directly in the main conversation?
+
+A) The Explore subagent produces more accurate file listings than direct exploration
+B) It isolates the verbose discovery output in a separate context, returning only a summary, which preserves the main context window's token budget for implementation
+C) The Explore subagent is required before Claude Code is allowed to enter plan mode
+D) It replaces the need for plan mode entirely on multi-file tasks
+
+Ans : - B
+
+Q.5) A bug fix requires rewriting a gnarly 200-line parsing function, but the root cause and the correct fix are already fully known. Which mode is appropriate, and why?
+
+A) Plan mode, because 200 lines is a large, difficult change
+B) Direct execution, because the scope is a single file and the approach is already known -- difficulty alone does not change the decision
+C) Plan mode, because any function over 100 lines requires architectural review
+D) Plan-then-direct execution, because the file is long enough to be treated like a multi-file migration
+
+Ans : - B

@@ -1,0 +1,44 @@
+Q.1) A developer places `review.md` directly inside `.claude/skills/` (not inside a `.claude/skills/review/` subdirectory with a `SKILL.md` file). They expect `/review` to become available. What actually happens?
+
+A) `/review` works exactly as if it were placed under `.claude/commands/review.md`
+B) `/review` does not register as a command -- skills must be a directory containing a SKILL.md file; only the commands path accepts flat Markdown files
+C) `/review` registers but only for the developer who created it
+D) `/review` registers but ignores frontmatter such as `allowed-tools`
+
+Ans : - B
+
+Q.2) A team wants a `/deploy-check` command available to every developer who clones the repository. Where must it be created?
+
+A) `~/.claude/commands/deploy-check.md` so it loads for every user automatically
+B) `~/.claude/skills/deploy-check/SKILL.md` since skills are the canonical format
+C) `.claude/skills/deploy-check/SKILL.md` or `.claude/commands/deploy-check.md` inside the repository, so it is version-controlled and shared via git
+D) Either user-level location, since Claude Code merges user and project configuration automatically
+
+Ans : - C
+
+Q.3) A skill that performs deep codebase analysis produces thousands of characters of file listings and code excerpts every time it runs, but its frontmatter has no `context` field set. What is the consequence, and what fixes it?
+
+A) No consequence -- skills always run in an isolated subagent by default
+B) The verbose output flows into the main conversation and consumes context window tokens, degrading subsequent responses; adding `context: fork` isolates it in a subagent instead
+C) The skill will fail to run until `allowed-tools` is added
+D) The skill will silently truncate its own output after a fixed length
+
+Ans : - B
+
+Q.4) A team's standard is "all API responses must return `{ data, error, metadata }}`, applied on every code change." A separate need is "an occasional workflow, invoked by name, that analyses a feature area and reports patterns and risks." Where should each live?
+
+A) Both belong in CLAUDE.md, since Claude Code needs both to be always in context
+B) Both belong in skills, since skills can be auto-invoked based on description matching
+C) The API response standard belongs in CLAUDE.md (always-loaded, universal); the analysis workflow belongs in a skill (on-demand, task-specific, full body loads only when invoked)
+D) The API response standard belongs in a skill; the analysis workflow belongs in CLAUDE.md
+
+Ans : - C
+
+Q.5) A developer wants a personal, more verbose version of the team's existing `.claude/skills/analyse/SKILL.md` without affecting teammates or breaking the shared command. What is the correct approach?
+
+A) Edit `.claude/skills/analyse/SKILL.md` directly and rely on personal git stash to keep changes local
+B) Create a separate skill under a different name, e.g. `~/.claude/skills/deep-analyse/SKILL.md`, which coexists with the team skill without overriding or conflicting with it
+C) Copy the team skill into `~/.claude/commands/analyse.md` with the same name so it takes precedence for that user
+D) Add a personal `context: fork` override inside the shared `.claude/skills/analyse/SKILL.md` file
+
+Ans : - B

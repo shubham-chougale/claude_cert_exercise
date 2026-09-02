@@ -1,0 +1,44 @@
+Q.1) A project has test files co-located with source code scattered across 50+ directories (components, api, utils, pages), and every test file must follow identical conventions. What is the best way to enforce this?
+
+A) Place an identical CLAUDE.md in every one of the 50+ directories
+B) Add all the test conventions to the root-level CLAUDE.md
+C) Create one rule file in `.claude/rules/` with YAML frontmatter `paths: ["**/*.test.ts", "**/*.test.tsx"]` holding the test conventions
+D) Create a skill that developers must manually invoke before writing a test
+
+Ans : - C
+
+Q.2) Why is placing file-type-specific conventions (e.g. test conventions) in the root-level CLAUDE.md the wrong choice, even though it technically works?
+
+A) Root CLAUDE.md files cannot contain YAML frontmatter
+B) Root CLAUDE.md always loads for every session regardless of which files are being edited, so it burns tokens even when editing files the conventions don't apply to
+C) Root CLAUDE.md is overridden automatically by any `.claude/rules/` file
+D) Root CLAUDE.md conventions only apply to the directory Claude Code was launched from
+
+Ans : - B
+
+Q.3) What is the key difference between a path-specific rule in `.claude/rules/` and a skill in `.claude/skills/`?
+
+A) Rules require an explicit invocation like a slash command; skills load automatically based on the file being edited
+B) Rules are always-on background guidance that activates passively when an edited file's path matches; skills are on-demand, multi-step procedures triggered by explicit invocation or intent match
+C) Rules and skills are interchangeable and differ only in file location
+D) Rules can only apply to test files; skills can only apply to infrastructure files
+
+Ans : - B
+
+Q.4) A rule file is meant to apply to Terraform files. Which YAML frontmatter correctly scopes it?
+
+A) `directories: ["terraform"]`
+B) `applies_to: "*.tf"`
+C) `paths: ["terraform/**/*", "**/*.tf", "infrastructure/**/*"]`
+D) No frontmatter is needed -- rule files in `.claude/rules/` always apply to every file type
+
+Ans : - C
+
+Q.5) Compared to duplicating identical conventions into CLAUDE.md files in 50+ scattered test directories, what is the main advantage of a single path-specific rule file using glob patterns?
+
+A) It runs faster because glob matching is computed on the GPU
+B) It requires maintaining exactly one file instead of 50+ copies that must be kept in sync, eliminating convention drift
+C) It gives the test conventions higher priority than any other CLAUDE.md file
+D) It automatically rewrites existing tests to match the new conventions
+
+Ans : - B

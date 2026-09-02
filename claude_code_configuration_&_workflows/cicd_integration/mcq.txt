@@ -1,0 +1,44 @@
+Q.1) A CI pipeline runs Claude Code with a prompt but hangs indefinitely; logs show Claude waiting for interactive input that never arrives. What is the correct fix?
+
+A) Set a `CLAUDE_HEADLESS=true` environment variable before invoking Claude Code
+B) Add the `-p` (or `--print`) flag to run Claude Code in non-interactive print mode
+C) Add a `--batch` flag for batch processing mode
+D) Redirect stdin from `/dev/null` when invoking the command
+
+Ans : - B
+
+Q.2) A team runs code review in the same Claude Code session that generated the code, and notices it rarely flags issues in its own output. Why is an independent review session more reliable?
+
+A) The same-session reviewer retains the generation session's own justification reasoning, which biases it toward accepting decisions it already rationalized
+B) The same-session reviewer has less context available, so it misses issues by default
+C) Independent sessions always use a larger, more capable model automatically
+D) Same-session review is functionally identical to independent review; the difference is only in speed
+
+Ans : - A
+
+Q.3) A pre-merge CI check must complete before a developer can merge their PR. Why is the Batch API the wrong choice for this workflow, even though it offers roughly 50% cost savings?
+
+A) The Batch API cannot process code-review prompts at all
+B) The Batch API has no guaranteed latency SLA and can take up to 24 hours, which is incompatible with a blocking, time-sensitive check
+C) The Batch API only supports a single request per batch, making it unusable for PR review
+D) The Batch API requires a different authentication method than pre-merge checks can use
+
+Ans : - B
+
+Q.4) An automated review pipeline re-analyzes the entire PR from scratch on every push with no memory of prior findings. What problem does this create, and what is the fix?
+
+A) It produces identical or duplicate comments on already-flagged, still-unfixed issues (and stale comments on now-fixed ones), eroding developer trust; the fix is to carry forward previous findings and report only new or still-present issues
+B) It is not actually a problem, since re-analyzing from scratch guarantees the most accurate results every time
+C) The fix is to reduce review frequency to once per day so findings don't accumulate
+D) The fix is to switch the review workflow to the Batch API to reduce cost per run
+
+Ans : - A
+
+Q.5) A CI script needs Claude Code output that can be parsed programmatically (e.g. to post inline PR comments at exact file/line locations). Which combination of flags achieves this?
+
+A) `--verbose` alone, since it prints full turn-by-turn output
+B) `--output-format json` together with `--json-schema`, so the schema-validated payload lands in the `structured_output` field of the JSON envelope
+C) `--append-system-prompt` to instruct Claude to format its answer as JSON in plain text
+D) `--max-turns 1` to force a single, short, easily-parsed response
+
+Ans : - B

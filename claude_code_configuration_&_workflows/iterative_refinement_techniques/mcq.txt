@@ -1,0 +1,44 @@
+Q.1) A developer describes a code transformation in prose, and Claude Code interprets it differently across separate runs -- sometimes wrapping the return type one way, sometimes another. What technique should be tried first?
+
+A) Rewrite the prose instruction with more precise, more detailed wording
+B) Provide 2-3 concrete input/output examples showing the exact before/after transformation
+C) Switch to a larger context window so the model retains more of the instruction
+D) Ask the model to explain its interpretation before making the change
+
+Ans : - B
+
+Q.2) Why does refining the prose wording (rather than switching to concrete examples) usually fail to fix inconsistent interpretation?
+
+A) Prose instructions are not supported by Claude Code's tool-use system
+B) More precise prose still relies on the model's interpretation of language; concrete examples eliminate that ambiguity by showing the exact transformation directly
+C) Prose instructions can only be applied to a single file at a time
+D) Prose instructions are silently truncated after a fixed character limit
+
+Ans : - B
+
+Q.3) A migration script needs to handle many edge cases correctly (null values, empty inputs, boundary conditions) and the transformation logic is complex. Which technique gives the most unambiguous feedback for iterating toward a correct implementation?
+
+A) The interview pattern -- ask Claude clarifying questions before it writes any code
+B) Test-driven iteration -- define test cases covering the edge cases and share "Expected X, got Y" failures
+C) Batch feedback -- describe every requirement in a single long prose message
+D) Concrete input/output examples for the happy path only
+
+Ans : - B
+
+Q.4) A developer is building a caching layer, which is outside their area of expertise, and asks Claude Code to implement it directly. What is the risk, and what technique addresses it?
+
+A) No risk -- direct implementation is always preferable once requirements are known; use test-driven iteration instead
+B) A direct implementation will silently adopt default assumptions and miss domain-specific requirements (TTL policy, invalidation strategy, consistency guarantees); the interview pattern -- asking Claude to pose clarifying questions before implementing -- surfaces them
+C) The fix is to provide concrete input/output examples of cache hits and misses
+D) The fix is to batch all requirements into one message rather than iterating
+
+Ans : - B
+
+Q.5) A code review surfaces three issues: fixing the error-handling shape, updating the logging format (which assumes the new error-handling shape is already in place), and updating type definitions (which assumes both prior fixes are in place). A fourth issue -- renaming a variable -- is unrelated to all three. How should this feedback be delivered to avoid an inconsistent end-state?
+
+A) Sequentially, one issue per message, in whatever order the review tool reported them
+B) All three interdependent issues together in a single message so fixes account for their dependencies; the unrelated renaming issue can be delivered separately, in either order, since it doesn't interact with the others
+C) Sequentially is always safe as long as each individual fix is correct in isolation
+D) Batching is never appropriate because it risks confusing the model about which feedback applies where
+
+Ans : - B
