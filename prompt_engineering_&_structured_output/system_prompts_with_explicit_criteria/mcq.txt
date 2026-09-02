@@ -1,0 +1,44 @@
+Q.1) A system prompt tells Claude to "be conservative" and only flag issues it is "highly confident" about. Reviewers still see wildly inconsistent output run to run. What is the root cause and the fix?
+
+A) The model temperature is too high; lowering it will fix consistency
+B) Vague language provides no actionable decision boundary; replace it with explicit categorical criteria (what to report, what to skip, concrete triggers)
+C) The prompt is too short; simply add more instructions describing the same conservatism
+D) Confidence thresholds should be raised until the output stabilizes
+
+Ans : - B
+
+Q.2) A code-review pipeline has three finding categories: security, correctness, and style. The style category has a very high false-positive rate, while security and correctness are accurate. Developers report they've stopped trusting ALL findings, including security ones. What is the documented fix?
+
+A) Keep all three categories on and add a global confidence threshold
+B) Temporarily disable the noisy style category to restore trust in the system, then rework its prompt before reintroducing it
+C) Merge all three categories into one so severity averages out
+D) Ask the model to double-check its own style findings in the same turn
+
+Ans : - B
+
+Q.3) Why does defining "critical severity" as "issues that could cause system failures" produce inconsistent classification across runs?
+
+A) The model cannot count severity levels reliably
+B) It's a subjective prose description with no concrete decision boundary; supplying actual code patterns (e.g. unsanitized SQL string interpolation) for each severity level removes the ambiguity
+C) Severity should never be part of a system prompt
+D) The system prompt exceeded the context window
+
+Ans : - B
+
+Q.4) A team wants to filter findings by having the model self-report a confidence score and only surface findings above 0.8. What does the certification guide say about this approach?
+
+A) It is the correct and sufficient way to eliminate false positives
+B) Self-reported LLM confidence is poorly calibrated (models are often confident about wrong findings and unsure about right ones); explicit criteria should be established first, with confidence used only for secondary routing (e.g. to human review)
+C) Confidence thresholds should replace explicit criteria entirely
+D) Confidence scores are only meaningful above 0.95
+
+Ans : - B
+
+Q.5) Which of the following is an explicit, exam-correct system prompt criterion (as opposed to a vague one)?
+
+A) "Only flag issues you are very confident about."
+B) "Use your best judgment on what counts as a security issue."
+C) "Report SQL queries built via string formatting/concatenation of user input as critical; skip local style preferences and naming conventions entirely."
+D) "Be thorough but conservative in your review."
+
+Ans : - C

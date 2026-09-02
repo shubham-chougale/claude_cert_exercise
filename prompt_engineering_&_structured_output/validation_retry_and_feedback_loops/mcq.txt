@@ -1,0 +1,44 @@
+Q.1) An extraction fails validation because line items sum to 450 but stated_total is 500. A retry is issued with only "Validation failed, please try again" and no other detail. What happens?
+
+A) The model reliably self-corrects because it can re-derive the error from the schema alone
+B) The model has no guidance for what to fix and usually reproduces the same mistake; the retry must include the specific error (e.g. "line items sum to 450 but stated_total is 500")
+C) tool_use automatically injects the specific error for you
+D) The retry will always succeed on the second attempt regardless of feedback
+
+Ans : - B
+
+Q.2) What are the three ingredients the guide specifies for an effective retry-with-error-feedback prompt?
+
+A) The system prompt, the user's original question, and a temperature setting
+B) The original document, the previous (failed) output, and the specific validation error
+C) Just the specific validation error is sufficient; the rest is unnecessary
+D) A confidence score, a severity label, and a category
+
+Ans : - B
+
+Q.3) A source document genuinely never mentions a "department" field, and the schema requires it. After 3 retries, extraction still fails. What is the correct response?
+
+A) Keep retrying indefinitely until the model produces something
+B) Recognize that no amount of retrying manufactures data that was never in the source; flag for human review or return null if the schema permits
+C) Instruct the model to guess a reasonable department name
+D) Treat this the same as a format error and keep retrying with the same feedback
+
+Ans : - B
+
+Q.4) What is the relationship between JSON-schema tool_use and Pydantic validators in a validation pipeline, according to the guide?
+
+A) They are redundant; Pydantic replaces the need for tool_use schemas entirely
+B) tool_use/schemas eliminate syntax errors (structure, types, required fields); Pydantic validators enforce business rules schemas cannot express, like cross-field arithmetic or date ordering
+C) Pydantic is only useful for JSON serialization, not validation
+D) tool_use handles business rules; Pydantic handles JSON syntax
+
+Ans : - B
+
+Q.5) Which of these is a "self-correction schema design" technique the guide recommends?
+
+A) Extracting a single "total" field and trusting it
+B) Extracting both calculated_total (sum of line items) and stated_total (document's claim) so a discrepancy is automatically detectable without external logic
+C) Omitting totals entirely to avoid mismatches
+D) Rounding all totals to the nearest 100 to reduce mismatch noise
+
+Ans : - B

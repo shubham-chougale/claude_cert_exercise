@@ -1,0 +1,44 @@
+Q.1) A team adds "please review your own output carefully" to the same session that generated the code, hoping to catch bugs before shipping. Why does this not solve the self-review problem?
+
+A) The instruction is too polite; a firmer instruction would work
+B) A model reviewing its own output in the same session retains its original reasoning chain and is biased toward confirming its initial decisions; the fix is an independent instance with no prior reasoning context, not a prompt tweak
+C) Self-review only fails when temperature is above 0.5
+D) Self-review works fine; the real problem is context window size
+
+Ans : - B
+
+Q.2) A single review pass over 20 files shows detailed feedback on the first and last few files but superficial or missing feedback in the middle. What is this called, and what fixes it?
+
+A) Model drift; fixed by using a smaller model
+B) Attention dilution; fixed by running a focused per-file review pass so every file gets consistent depth, then a separate cross-file integration pass
+C) Prompt injection; fixed by sanitizing file contents
+D) Context overflow; fixed only by shortening each file before review
+
+Ans : - B
+
+Q.3) Does switching to a model with a much larger context window solve the attention-dilution problem in single-pass multi-file review?
+
+A) Yes, larger context windows directly fix uneven review depth
+B) No -- larger context windows let the model hold more text but do not solve attention quality issues; the model still gives uneven attention across files, so per-file passes are still needed
+C) Yes, but only above 1M tokens of context
+D) No such problem exists with sufficiently large context
+
+Ans : - B
+
+Q.4) In a two-pass review architecture, what is Pass 2 (cross-file integration) specifically designed to catch that Pass 1 (per-file) cannot?
+
+A) Syntax errors within a single file
+B) Data-flow inconsistencies, contradictory findings between files, API contract violations, and dependency conflicts that only appear when comparing across files
+C) Style violations within a single file
+D) Whether a single file compiles
+
+Ans : - B
+
+Q.5) A pipeline routes findings with self-reported confidence above 0.8 straight to production and below 0.8 to human review, without further validation. What does the guide say about this setup?
+
+A) It's correct as-is; 0.8 is a universally safe threshold
+B) Raw self-reported confidence is poorly calibrated (models can be confident about wrong findings); thresholds must be calibrated against a labeled validation set before being used for routing decisions
+C) Confidence-based routing should never be used at all
+D) The threshold should always be set to exactly 0.95 instead
+
+Ans : - B

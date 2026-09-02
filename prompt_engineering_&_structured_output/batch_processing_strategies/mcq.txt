@@ -1,0 +1,44 @@
+Q.1) What cost savings does the Message Batches API offer versus synchronous calls, and what is its maximum processing window?
+
+A) 25% savings, guaranteed within 1 hour
+B) 50% savings, up to 24 hours with no guaranteed SLA
+C) 90% savings, guaranteed within 24 hours
+D) 50% savings, guaranteed within 12 hours
+
+Ans : - B
+
+Q.2) A pre-merge code review must block the merge button until results are ready. Which API should be used and why?
+
+A) Batch API, because it's cheaper and merges aren't time-sensitive
+B) Synchronous API, because the workflow is blocking -- a process is waiting on the immediate result
+C) Either API works equally well here
+D) Batch API, submitted every 24 hours
+
+Ans : - B
+
+Q.3) A batch of 1,000 requests completes with 40 failures. What is the correct failure-handling pattern?
+
+A) Resubmit the entire batch of 1,000 requests to be safe
+B) Identify the 40 failures via custom_id, and resubmit only those with targeted fixes (e.g. chunking oversized documents, simplifying prompts, adding few-shot examples for structural variety)
+C) Discard the failures and only report the 960 successes
+D) Immediately switch the whole workflow to synchronous calls
+
+Ans : - B
+
+Q.4) A workflow has an end-to-end SLA of 30 hours. Given the batch API's 24-hour maximum window, what does the guide recommend?
+
+A) Submit once and assume typical completion is much faster than 24 hours
+B) Compute the leftover buffer (30 - 24 = 6 hours) and submit batches frequently within that buffer (e.g. every 4 hours) so the queue stays continuously fed, never assuming faster-than-worst-case completion
+C) Switch entirely to synchronous calls since batch can't meet any SLA under 48 hours
+D) Increase the SLA to 48 hours to be safe
+
+Ans : - B
+
+Q.5) A pipeline needs to call tools mid-processing across multiple turns as part of an agentic extraction flow. Can this run in the Batch API?
+
+A) Yes, batch supports multi-turn tool execution within a single batched request
+B) No -- the Batch API has no multi-turn tool-calling support within single batch requests; use the synchronous API for workflows where tools must execute mid-processing
+C) Yes, but only if tool_choice is set to "any"
+D) Yes, as long as custom_id is set on every tool call
+
+Ans : - B

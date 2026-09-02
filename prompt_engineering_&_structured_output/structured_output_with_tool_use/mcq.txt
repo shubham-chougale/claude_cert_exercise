@@ -1,0 +1,44 @@
+Q.1) What does tool use with a JSON schema guarantee that prompt-based ("please respond in JSON") output does not?
+
+A) It guarantees the extracted VALUES are correct
+B) It guarantees the output is syntactically well-formed and schema-compliant (no missing brackets, unquoted keys, wrong shape); it does not guarantee semantic correctness
+C) It guarantees line-item sums always match stated totals
+D) It eliminates the need for any validation logic at all
+
+Ans : - B
+
+Q.2) A document-processing pipeline receives invoices, receipts, and contracts, but the document type is unknown ahead of time and three different extraction schemas exist. Which tool_choice setting is correct?
+
+A) auto -- let the model decide whether to call a tool
+B) {"type": "tool", "name": "extract_invoice"} -- force one specific schema
+C) any -- force a tool call while letting the model pick which schema fits
+D) none of these; tool_choice cannot express this case
+
+Ans : - C
+
+Q.3) A schema marks "department" as a required field. The source document never mentions any department. What is the most likely outcome, and what's the fix?
+
+A) The model will correctly leave it as an empty string; no fix needed
+B) The API call will fail with a validation error; add try/except around the call
+C) The model is pressured to fabricate a plausible department value to satisfy the required field; make the field optional/nullable instead
+D) tool_use automatically converts unspecified required fields to null
+
+Ans : - C
+
+Q.4) A structured extraction schema classifies documents into invoice/receipt/contract. A batch includes a document that is genuinely ambiguous and doesn't clearly fit any category. What schema design handles this correctly?
+
+A) Force the model to pick the closest of the three categories anyway
+B) Add an explicit "unclear" enum value so the model can honestly flag ambiguity instead of guessing
+C) Drop the document from the batch silently
+D) Require a confidence score above 0.9 for every categorization
+
+Ans : - B
+
+Q.5) An extraction schema enforces types and required fields correctly (valid JSON, correct shape), but the returned line items sum to 450 while the stated_total field says 500. What category of error is this, and what does the guide say about it?
+
+A) A syntax error; tool_use should have prevented it
+B) A semantic error; tool_use with schemas addresses structure only, so this requires additional validation logic beyond schema design
+C) A tool_choice misconfiguration; switching from "any" to "auto" would fix it
+D) This cannot happen when using tool_use
+
+Ans : - B

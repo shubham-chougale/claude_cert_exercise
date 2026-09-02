@@ -1,0 +1,44 @@
+Q.1) Claude's output format (bullets vs. table vs. prose) varies across runs even though the system prompt already contains thorough formatting instructions. What is the most effective fix?
+
+A) Add even more detailed prose instructions describing the desired format
+B) Add 2-4 few-shot examples showing the exact desired output format
+C) Lower the temperature to 0
+D) Switch to a larger model
+
+Ans : - B
+
+Q.2) How many few-shot examples does the certification guide recommend as the effective range?
+
+A) A single example is always sufficient
+B) 2-4 targeted examples; fewer than two don't establish a pattern, more than four waste tokens without proportional gains
+C) At least 10, to cover every edge case
+D) There is no upper bound; more is always better
+
+Ans : - B
+
+Q.3) A severity classifier inconsistently labels variable shadowing as "critical" in some cases and "minor" in others. Which few-shot design fixes this most effectively?
+
+A) An example showing only the code and its label, with no explanation
+B) An example that includes reasoning explaining WHY that verdict was chosen over the alternative, teaching the underlying principle rather than a literal pattern match
+C) Ten unlabeled examples of shadowing code
+D) A longer prose paragraph defining "critical" abstractly
+
+Ans : - B
+
+Q.4) An extraction pipeline correctly pulls fields from tables but returns null for the same fields when they appear in narrative prose paragraphs. What is the correct fix?
+
+A) Add a few-shot example demonstrating extraction from narrative-structured text specifically
+B) Add a generic instruction: "extract all fields even if formatting varies"
+C) Make the field required in the schema so it can't be null
+D) Switch to tool_choice: any
+
+Ans : - A
+
+Q.5) Which problem is NOT best solved by few-shot examples, according to the guide's few-shot vs. alternative-technique table?
+
+A) Inconsistent output formatting
+B) Ambiguous judgment calls between similar cases
+C) Malformed/invalid JSON syntax in the output
+D) Missed extraction on narrative text structures
+
+Ans : - C
