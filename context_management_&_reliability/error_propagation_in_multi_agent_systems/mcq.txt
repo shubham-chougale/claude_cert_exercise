@@ -1,0 +1,44 @@
+Q.1) A subagent classifies its failures into transient, validation, business, and permission types. Which pairing of failure type to correct coordinator response is right?
+
+A) transient -> request authorization; permission -> retry immediately
+B) transient -> may succeed on retry; validation -> fix the query; business -> escalate or find an alternative; permission -> requires authorization changes, not a retry
+C) All four types should always be retried automatically
+D) All four types should always be escalated to a human, with no automated response
+
+Ans : - B
+
+Q.2) A subagent hits a timeout but returns {"results": [], "status": "success"} instead of surfacing the failure. Why is this an especially dangerous anti-pattern?
+
+A) It uses too many tokens compared to returning an error
+B) The coordinator believes the search genuinely succeeded and found nothing, so it never retries or tries an alternative -- the resulting gap in the final output becomes invisible
+C) It is not actually a problem since empty results and failures should be treated identically
+D) It only matters if the subagent is the last one in the pipeline
+
+Ans : - B
+
+Q.3) In a research pipeline, one of five subagents fails after the other four succeed. What is the correct middle-ground response, avoiding both silent suppression and workflow termination?
+
+A) Abort the entire pipeline and discard all five subagents' work
+B) Silently return the four successful results as if the fifth topic simply had nothing to report
+C) Preserve the structured error context (failure type, attempted action, any partial results) from the failed subagent, and let the coordinator decide to retry, try an alternative, or proceed with partial results plus a coverage annotation noting the gap
+D) Retry the entire pipeline from scratch, including the four subagents that already succeeded
+
+Ans : - C
+
+Q.4) A database query for "geothermal energy studies" returns zero rows because the query executed successfully and there genuinely are none in the index. How should this be distinguished from a connection timeout that also returns zero rows?
+
+A) They should be treated identically since both return zero results
+B) query_executed=True with zero matches is a valid empty result (status: success, shouldRetry: false); query_executed=False due to a timeout is an access failure (status: error, shouldRetry: true) -- conflating the two either skips a needed retry or wastes one on a query that will always return nothing
+C) Only the presence of an error message matters; the executed flag is irrelevant
+D) Both should always trigger a retry to be safe
+
+Ans : - B
+
+Q.5) What are the four documented components of a structured error response a subagent should return to its coordinator on failure?
+
+A) Error message, stack trace, timestamp, and retry count
+B) Failure type classification, the attempted action (specific query/parameters/target), any partial results already retrieved, and alternative approaches to try
+C) Just a boolean success flag and an error string
+D) HTTP status code, response headers, and latency
+
+Ans : - B

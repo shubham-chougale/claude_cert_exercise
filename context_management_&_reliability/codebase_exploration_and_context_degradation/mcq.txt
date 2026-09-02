@@ -1,0 +1,44 @@
+Q.1) During a long codebase exploration, an agent starts referencing "the OrderRepository class at src/repos/order.ts" specifically early on, but later refers to "typical repository patterns" generically. What causes this, and does a larger context window fix it?
+
+A) It's a token-limit issue; a larger context window fixes it directly
+B) It's an attention quality problem, not a token-limit issue -- earlier precise findings get buried under accumulating verbose exploration output, and increasing the context window doesn't fix it since the model isn't running out of space
+C) It's caused by the model's temperature setting being too high
+D) It only happens with models smaller than 100B parameters
+
+Ans : - B
+
+Q.2) What is identified as the foundational mitigation for context degradation during extended exploration?
+
+A) Restarting the session periodically to clear context
+B) Scratchpad files -- writing key findings (specific class names, file paths, dependency chains) to a persistent file outside the vulnerable conversation context, then referencing them for subsequent questions
+C) Switching to a model with a larger context window
+D) Disabling tool use during exploration
+
+Ans : - B
+
+Q.3) What is the PRIMARY documented benefit of delegating focused investigation tasks to subagents during codebase exploration?
+
+A) Parallelization -- subagents simply run faster in parallel
+B) Context isolation -- the main agent's context stays clean for coordination while subagents handle verbose file reads and search results independently, returning only structured summaries
+C) Cost reduction, since subagents use a cheaper model
+D) Subagents have access to tools the main agent does not
+
+Ans : - B
+
+Q.4) When should Claude Code's /compact command be used during an extended exploration session?
+
+A) Only as an emergency measure once context is completely full
+B) Proactively throughout the session to maintain quality, not just reactively at the limit
+C) Never during exploration; only at the very end of a session
+D) Only when the model explicitly requests it
+
+Ans : - B
+
+Q.5) An extended exploration session crashes partway through. What is the correct recovery approach?
+
+A) Restart the session from scratch, since accumulated context can't be trusted
+B) Load a structured state manifest (session ID, current phase, explored paths, key findings, next steps) and inject it into a fresh session's prompt to resume exactly where the crashed session left off
+C) Simply increase the context window size and resume with the same conversation history
+D) Discard all findings and re-explore only the files touched in the last 10 minutes
+
+Ans : - B

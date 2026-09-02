@@ -1,0 +1,44 @@
+Q.1) A support bot summarizes each conversation turn to save tokens. After summarisation, "I'd like a refund of $247.83 for order #8891 placed on March 3rd" becomes "Customer wants a refund for a recent order." What is the correct fix?
+
+A) Stop summarizing entirely and keep full raw history forever
+B) Extract transactional essentials (amounts, order IDs, dates) into a persistent case facts block kept OUTSIDE the summarised narrative, so they survive every summarisation cycle unchanged
+C) Increase summary length limits so more words are kept
+D) Ask the model to "try to remember numbers" in the system prompt
+
+Ans : - B
+
+Q.2) A synthesis agent aggregates six research sections, and the model reliably misses the key finding when it's placed in section 3 of 6. What is the documented fix?
+
+A) Add a prompt instruction telling the model to "pay attention to all sections equally"
+B) A structural fix: place a Key Findings Summary section at the BEGINNING of the aggregated input, since lost-in-the-middle is an architectural attention characteristic, not something prompt wording resolves
+C) Increase the context window size so all sections fit more comfortably
+D) Repeat the key finding at the very end only
+
+Ans : - B
+
+Q.3) An order-lookup tool returns 40+ fields, but a refund workflow only needs 5 of them. What is the correct handling?
+
+A) Pass all 40+ fields into conversation history in case they're needed later
+B) Trim the tool result to the relevant fields before it enters conversation history (e.g. in a PostToolUse hook), since unused fields compound in token cost across every subsequent turn
+C) Ask the model to ignore irrelevant fields when reasoning
+D) Store the full result in a separate database and never trim anything
+
+Ans : - B
+
+Q.4) For prompt caching to work correctly, what layout does a request need?
+
+A) Volatile per-request content first, then static system instructions
+B) Static content (system instructions, tool definitions, reference docs) first, a cache_control breakpoint at the end of that static block, then volatile content after -- since cache hits depend on prefix matching from the start
+C) Cache breakpoints can be placed anywhere; order doesn't matter
+D) Static and volatile content should be interleaved for best cache utilization
+
+Ans : - B
+
+Q.5) The Claude API is described as stateless. What does this mean for multi-turn context management?
+
+A) The server retains conversation state, so only new messages need to be sent
+B) Each request must include the complete conversation history since there is no server-side session state; this is why a persistent case facts block (not selective truncation) is needed to preserve critical facts while still allowing narrative summarisation
+C) Statelessness means summarisation is unnecessary since the server tracks everything
+D) Each request can omit earlier turns freely without consequence
+
+Ans : - B

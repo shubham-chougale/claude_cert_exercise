@@ -1,0 +1,44 @@
+Q.1) What are the five mandatory components of a structured claim-source mapping the guide requires for every research finding?
+
+A) Claim, confidence score, severity, category, and reviewer name
+B) Claim, source URL, document name, relevant excerpt, and publication date
+C) Claim, author name, page number, word count, and language
+D) Claim, source URL, and nothing else -- the rest is optional
+
+Ans : - B
+
+Q.2) A synthesis agent compresses ten structured findings with sources and dates into "Investment has grown significantly." What went wrong, and what is the fix?
+
+A) Nothing went wrong; concise prose is preferable to detailed citations
+B) Attribution died during summarisation because the synthesis step wasn't explicitly instructed to preserve claim-source mappings; the fix is requiring every claim in the output to remain traceable to its specific source through every synthesis step
+C) The fix is to always output raw, unsummarized findings with no synthesis at all
+D) The fix is to increase the model's context window
+
+Ans : - B
+
+Q.3) Two credible sources report different growth statistics for the same period (IEA: 12%, Bloomberg NEF: 8%). What is the correct handling?
+
+A) Average the two values to get a single reasonable number
+B) Prefer the more authoritative or more recent source and drop the other
+C) Annotate both values with full source attribution and publication dates, noting possible explanations (e.g. methodology differences), and let the consumer decide relevance
+D) Report only the higher of the two values, since it shows more growth
+
+Ans : - C
+
+Q.4) Source A (2023) reports 8% growth; Source B (2024) reports 12% growth. Without checking publication dates, a synthesis agent flags this as a data contradiction. What is the actual explanation, and what prevents this misreading?
+
+A) It genuinely is a contradiction; one source must be wrong
+B) Different publication/reporting dates likely explain an accelerating trend rather than a contradiction; including publication dates in structured outputs prevents synthesis agents from misreading valid trends as data-quality issues
+C) The numbers should simply be averaged since both are from credible sources
+D) Only the most recent number should ever be reported
+
+Ans : - B
+
+Q.5) A report includes financial comparisons, a news summary, and technical architecture specifications. What rendering approach does the guide recommend?
+
+A) Force everything into a single table for consistency
+B) Force everything into prose paragraphs for a smooth narrative
+C) Match format to content type: tables for financial/comparison data, prose for news/current events, and structured lists for technical findings -- forcing all content into one format degrades readability
+D) Use bullet points exclusively for every section regardless of content type
+
+Ans : - C

@@ -1,0 +1,44 @@
+Q.1) An extraction system reports 97% overall accuracy. Standard invoices (95% of volume) hit 99.5% accuracy; handwritten receipts hit 60.1%; international formats hit 45.2%. Is 97% a safe basis for deciding what to automate?
+
+A) Yes -- 97% is well above any reasonable automation threshold
+B) No -- aggregate metrics are volume-weighted and can mask catastrophic per-segment failures; accuracy must be validated by document type AND field segment before automating
+C) Yes, as long as the sample size is large enough
+D) No, but only because 97% is technically below 99%
+
+Ans : - B
+
+Q.2) A model reports 0.90 confidence on both a date field and an amount field. Should the same 0.90 threshold be used to route both to automation?
+
+A) Yes, confidence is confidence regardless of field type
+B) No -- calibration curves differ by field type and document type (e.g. 0.90 confidence might mean 94% actual accuracy for dates but 82% for amounts), so thresholds must be calibrated per field type and document type using a labeled validation set
+C) Yes, but only if the document type is the same
+D) No, confidence scores should never be used for routing under any circumstance
+
+Ans : - B
+
+Q.3) A verification sampling strategy only reviews low-confidence extractions, since those are the ones already routed to humans. What is the flaw in this strategy?
+
+A) There is no flaw; low-confidence items are the only ones that matter
+B) It misses systematic errors that may exist within the automated HIGH-confidence predictions; only stratified sampling that includes high-confidence items can catch that class of failure
+C) It reviews too many items, wasting reviewer capacity
+D) Low-confidence items should never be sampled at all
+
+Ans : - B
+
+Q.4) How should limited human reviewer capacity be allocated across a queue of pending extractions?
+
+A) Evenly across all items, or in chronological arrival order
+B) Dynamically prioritized by uncertainty -- lowest model confidence first, ambiguous/contradictory documents, and historically poor-accuracy document types -- re-ordering the queue as new extractions arrive
+C) Randomly, to avoid reviewer bias
+D) Only items flagged by the customer, ignoring model confidence entirely
+
+Ans : - B
+
+Q.5) What is the correct validation sequence before reducing human review on a segment, according to the guide?
+
+A) Jump straight to reducing review once aggregate accuracy looks good
+B) Measure accuracy disaggregated by document type/field segment, calibrate confidence against a labeled set, set calibrated thresholds, implement stratified sampling for ongoing verification, and only then reduce review on consistently validated segments
+C) Reduce review first, then measure accuracy afterward to confirm it was safe
+D) Skip calibration entirely if the aggregate accuracy exceeds 95%
+
+Ans : - B

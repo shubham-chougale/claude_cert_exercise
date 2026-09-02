@@ -1,0 +1,44 @@
+Q.1) A customer says "I want to speak to a person." What is the correct behavior?
+
+A) First attempt to resolve the issue, then offer escalation if that fails
+B) Escalate immediately -- no investigation, no "let me try first"; this is an absolute rule with no exceptions
+C) Ask the customer to clarify why they want a human first
+D) Escalate only if the model's confidence is below 0.5
+
+Ans : - B
+
+Q.2) A customer requests a price match against a competitor's site, but the policy document only covers matching the company's own historical prices and says nothing about competitors. Is this a valid escalation trigger, and why?
+
+A) No -- since there's no explicit human request, this should never escalate
+B) Yes -- this is a policy GAP (policy is silent on the situation), which is a valid escalation trigger, distinct from a policy VIOLATION where a documented answer already exists
+C) No -- competitor price matches should always be auto-denied without escalation
+D) Yes, but only if the customer sounds frustrated
+
+Ans : - B
+
+Q.3) Why is sentiment (customer frustration level) an unreliable escalation trigger?
+
+A) Sentiment analysis models are too slow for real-time use
+B) Frustration does not correlate with case complexity -- an angry customer with a simple late-delivery issue is easy to resolve, while a calm customer requesting a genuine policy exception needs human judgment
+C) Customers are never actually frustrated in support conversations
+D) Sentiment should be the primary trigger, not a secondary one
+
+Ans : - B
+
+Q.4) Why is raw self-reported LLM confidence an unreliable basis for escalation decisions?
+
+A) Confidence scores are not available via the API
+B) Models are often incorrectly confident on hard cases and unnecessarily uncertain on straightforward ones, causing simple cases to escalate while complex ones get attempted and mishandled
+C) Confidence scores only work for classification tasks, not escalation
+D) Confidence should be multiplied by sentiment score before use
+
+Ans : - B
+
+Q.5) A search for "John Smith" returns three different customer records. What is the correct handling?
+
+A) Pick the most recently active record, since it's most likely to be the current one
+B) Pick the first result returned by the database query
+C) Request disambiguating information (email, phone, or order number) rather than guessing via any heuristic, since guessing risks privacy violations and incorrect actions
+D) Merge all three records into one composite profile
+
+Ans : - C
